@@ -384,6 +384,7 @@ public class TurtleController implements Listener {
 				//duplicate current ImageView positioning
 				myStamp.setX(toStamp.getX());
 				myStamp.setY(toStamp.getY());
+	    		myStamp.setRotate(Math.toDegrees(turtles.get(i).getDirection()));
 				
 				stampedTurtles.getChildren().add(myStamp);
 			}
