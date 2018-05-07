@@ -11,15 +11,17 @@ import turtle.Turtle;
 import turtle.TurtleController;
 import view.supplements.HBoxPenChanger;
 /**
- * Class that allows user to change pen color and width for each turtle
+ * Class that allows user to change color and width for each turtle's pen
  * @author xlany, elizabethshulman
  *
  */
 public class PenMenu extends TitledPane implements Listener {
+	
 	private TurtleController myTurtles;
 	private List<Turtle> allTurtles;
 	private ArrayList<HBoxPenChanger> penModifiers;
 	private ListView<HBoxPenChanger> penDisplay;
+	
 	/**
 	 * Constructor takes in
 	 * @param resources for languages
@@ -31,8 +33,8 @@ public class PenMenu extends TitledPane implements Listener {
 		initializeTitledPane();
 		setupPenChangers();
 		myTurtles.addTurtleListener(this);
-
 	}
+	
 	/**
 	 * Method initializes menu with penModifier and penDisplay
 	 * Visualizes penDisplay
@@ -46,9 +48,9 @@ public class PenMenu extends TitledPane implements Listener {
 				FXCollections.observableArrayList(penModifiers));
 		this.setContent(penDisplay);
 	}
+	
 	/**
-	 * Method creates (1) pen color selector and (2) button for changing width
-	 * for each turtle
+	 * For each turtle, create (1) a pen color selector and (2) a button for changing pen width
 	 */
 	private void setupPenChangers() {
 		allTurtles = myTurtles.getAllTurtles();
@@ -58,13 +60,13 @@ public class PenMenu extends TitledPane implements Listener {
 				new HBoxPenChanger(turtle, myTurtles.getAllTurtles().indexOf(turtle))));
 		penDisplay.setItems(FXCollections.observableArrayList(penModifiers));
 	}
+	
 	/**
-	 * Listener method: updates on new turtle
-	 * Allows new pen color selector and width selector to be initialized
+	 * Upon creation of a new turtle, this method initializes a corresponding pen-modification menu entry
+	 * Overriden from Listener interface
 	 */
 	@Override
 	public void update() {
 		setupPenChangers();
 	}
-	
 }

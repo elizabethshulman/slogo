@@ -1,12 +1,13 @@
 package turtle;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import alerts.Alerts;
+import javafx.scene.Group;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import observables.Listener;
 import view.canvas.DrawingWindow;
@@ -30,6 +31,7 @@ public class TurtleController implements Listener {
 	private Map<Integer, Color> colors;
 	private List<Image> shapes;
 	private int currentTurtle;
+	private List<ImageView> stampedTurtles;
 	
 	/**
 	 * makes a controller with the given paramters
@@ -50,7 +52,10 @@ public class TurtleController implements Listener {
 		addActiveTurtle(image, x, y, width, height);
 		notifyListeners();
 		currentTurtle = 1;
+		stampedTurtles = new ArrayList<ImageView>();
+		dw.getChildren().addAll(stampedTurtles);
 	}
+	
 	/**
 	 * initializes all the instance variables
 	 * @param dw
@@ -95,6 +100,7 @@ public class TurtleController implements Listener {
 	public void resetTurtles() {
 		turtles.stream().forEach(t -> t.resetTurtle());
 	}
+	
 	/**
 	 * sets all to inactive, then activates the correct turtles
 	 * @param newindices indices of the turtles to activate, of by one
@@ -348,4 +354,39 @@ public class TurtleController implements Listener {
 	 public void setImageMenu(List<Image> images) {
 		 shapes = images;
 	 }
+	 
+	 /**
+	 * Removes the current stamped ImageViews from the drawing window
+	 * @return 1 if there were any stamps cleared, 0 otherwise
+	 */
+	public double clearStamps() {
+		if(!stampedTurtles.isEmpty()) {
+			stampedTurtles.clear();
+			return 1;
+		} return 0;
+	}
+	
+	/**
+	 * Draws the image of the active turtle in its current settings on the
+	 * drawing window
+	 * @return the index of the turtle's image used for the stamp
+	 */
+	public double stamp() {
+		for(int i=0; i<turtles.size();i++) {
+			if(active.get(i)) {
+				ImageView toStamp = turtles.get(i).getImageView();
+				ImageView myStamp = new ImageView(toStamp.getImage());
+				
+				//duplicate current ImageView formatting
+				myStamp.setFitHeight(toStamp.getFitHeight());
+				myStamp.setFitWidth(toStamp.getFitWidth());
+				
+				//duplicate current ImageView positioning
+				myStamp.setX(toStamp.getX());
+				myStamp.setY(toStamp.getY());
+				
+				stampedTurtles.add(myStamp);
+			}
+		} return getShapeIndex();
+	}
 }
