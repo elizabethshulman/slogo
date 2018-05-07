@@ -7,12 +7,12 @@ import turtle.TurtleController;
  * @author elizabethshulman
  * Removes all stamps that have been made
  */
-public class ClearStamps implements Command {
+public class ClearStampsCommand implements Command {
 	private TurtleController myController;
 	
 	
 
-	public ClearStamps(TurtleController tc) {
+	public ClearStampsCommand(TurtleController tc) {
 		this.myController = tc;
 	}
 	

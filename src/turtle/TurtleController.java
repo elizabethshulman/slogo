@@ -31,7 +31,7 @@ public class TurtleController implements Listener {
 	private Map<Integer, Color> colors;
 	private List<Image> shapes;
 	private int currentTurtle;
-	private List<ImageView> stampedTurtles;
+	private Group stampedTurtles;
 	
 	/**
 	 * makes a controller with the given paramters
@@ -52,8 +52,8 @@ public class TurtleController implements Listener {
 		addActiveTurtle(image, x, y, width, height);
 		notifyListeners();
 		currentTurtle = 1;
-		stampedTurtles = new ArrayList<ImageView>();
-		dw.getChildren().addAll(stampedTurtles);
+		stampedTurtles = new Group();
+		dw.getChildren().add(stampedTurtles);
 	}
 	
 	/**
@@ -360,8 +360,8 @@ public class TurtleController implements Listener {
 	 * @return 1 if there were any stamps cleared, 0 otherwise
 	 */
 	public double clearStamps() {
-		if(!stampedTurtles.isEmpty()) {
-			stampedTurtles.clear();
+		if(!stampedTurtles.getChildren().isEmpty()) {
+			stampedTurtles.getChildren().clear();
 			return 1;
 		} return 0;
 	}
@@ -385,7 +385,7 @@ public class TurtleController implements Listener {
 				myStamp.setX(toStamp.getX());
 				myStamp.setY(toStamp.getY());
 				
-				stampedTurtles.add(myStamp);
+				stampedTurtles.getChildren().add(myStamp);
 			}
 		} return getShapeIndex();
 	}
